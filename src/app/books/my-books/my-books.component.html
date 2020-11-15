@@ -1,0 +1,76 @@
+<ngx-spinner color="#f97924"></ngx-spinner>
+<br>
+<div *ngIf="errorMsg" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error!</strong> {{errorMsg}}.
+</div>
+
+<div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> {{successMsg}}.
+</div>
+
+<div class="row">
+    <div class="col-3">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addBookModal">
+            <i class="fa fa-plus"></i> Create a new book
+        </button>
+
+    </div>
+    <div class="col">
+        <div>You may need to upload images for your book</div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+
+        <div class="d-flex" *ngFor="let b of myBooks">
+
+            <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;"
+                [ngClass]="{'border-danger': !b.isActive,'border-success':b.isActive}">
+
+
+                <img *ngIf="b.imgUrl" [src]="b.imgUrl" class="card-img-top" alt="b.title">
+
+                <div *ngIf="!b.imgUrl" class="imgTxtCenter">
+                    <img class="card-img-top" style="background-color:lightskyblue;">
+                    <div class="centered" style="color:darkblue">{{b.title}}</div>
+                </div>
+
+                <div class="card-body" [ngSwitch]="b.isActive">
+                    <span class="card-title">{{b.title}}</span>
+                    <span *ngSwitchCase="false" style="color: red;" small> (not active)</span>
+                    <!-- <span *ngSwitchDefault> (Active)</span> -->
+                    <p class="card-text truncateLongTexts">{{b.description}}</p>
+
+                </div>
+                <div class="card-footer text-muted">
+                    <button class="btn btn-sm" (click)="onBookEdit(b)" data-toggle="modal" data-target="#addBookModal">
+                        <i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn btn-sm" (click)="addContentClicked(b)">
+                        <i class="fas fa-edit"></i>Add Content</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--add book Modal -->
+<div class="modal fade" id="addBookModal" tabindex="-1" role="dialog" aria-labelledby="addBookModalLabel"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addBookModalLabel">{{modalTitle || "Add Book"}}</h5>
+                <button type="button" class="close" data-dismiss="modal" (click)="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-book (notifyBookAdded)="onBookAdded($event)" [selectedBook]="selectedBookForEdit"></app-book>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>

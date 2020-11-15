@@ -1,0 +1,295 @@
+<ngx-spinner color="#f97924"></ngx-spinner>
+<!-- <form *ngIf="errorMsg">
+    <div class="form-row" style="background-color:rgb(240, 15, 27); text-align: center;">
+        <div class="col">
+            <label for="inputEmail3" style="background-color:rgb(240, 15, 27); text-align: center;color: white;"
+                class="col-form-label">{{errorMsg}}</label>
+        </div>
+    </div>
+</form> -->
+<div *ngIf="errorMsg" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error!</strong> {{errorMsg}}.
+</div>
+
+<!-- <div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> {{successMsg}}.
+</div> -->
+
+
+<div class="row">
+    <!-- -lg-6 col-sm-6 col-xs-6 -->
+    <div class="col">
+        <br>
+        <div>
+            <div><a href="" [routerLink]="['/book-content']"> <i class="fas fa-arrow-left"></i> Book content</a></div>
+
+        </div>
+        <br>
+        <h3>Question</h3>
+        <form [formGroup]="questionForm" (ngSubmit)="saveQuestion()">
+
+            <div class="col">
+                <label for="chapter" class="col-form-label">Select or create Chapter title</label>
+                <div class="input-group mb-3">
+                    <select class="form-control" formControlName="chapter" id="chapter" (change)="onChapterChange()">
+                        <option *ngFor="let c of chapters ;i as index;" [ngValue]="c._id">
+                            {{c.name}}
+                        </option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button" data-toggle="modal"
+                            data-target="#addChapterModal" (click)="onCreateChapterClicked()">Create
+                            Chapter</button>
+
+                        <button class="btn btn-outline-info" type="button" (click)="selectedChapterForEdit()"
+                            [disabled]="!questionForm.get('chapter').value" data-toggle="modal"
+                            data-target="#addChapterModal"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <label for="quiz" class="col-form-label">Select or create a Quiz</label>
+                <div class="input-group mb-3">
+                    <select class="form-control" formControlName="quiz" id="quiz" (change)="onQuizChange()">
+                        <option *ngFor="let q of quizzes" [ngValue]="q._id">
+                            {{q.name}}
+                        </option>
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button" data-toggle="modal"
+                            data-target="#addQuizModal" (click)="onCreateQuizClicked()">Create
+                            Quiz</button>
+                        <button class="btn btn-outline-info" type="button" (click)="selectedQuizForEdit()"
+                            [disabled]="!questionForm.get('quiz').value" data-toggle="modal"
+                            data-target="#addQuizModal"><i class="fas fa-edit"></i></button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col">
+                <label for="quiz" class="col-form-label">Question Text</label>
+                <textarea id="questionText" formControlName="questionText" name="questionText" cols="40" rows="3"
+                    required="required" class="form-control"></textarea>
+            </div>
+            <br>
+
+            <div class="form-group">
+                <img style="width:128px;height:128px;" class="img-thumbnail" *ngIf="selectedImgUrl"
+                    [src]="selectedImgUrl">
+            </div>
+
+            <div class="input-group mb-3">
+                <label for="imgUrl" class="col-3 col-form-label">Image Url</label>
+                <input type="text" formControlName="imgUrl" name="imgUrl" class="form-control"
+                    placeholder="Click select image button" aria-label="Click select image button"
+                    aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button" data-toggle="modal"
+                        data-target="#searchImageModal">
+                        <i class="far fa-images"></i>
+                        Select Image</button>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label for="questionType" class="col-3 col-form-label">Question Type</label>
+                <div class="col-9" >
+                    <select id="questionType" class="form-control" disabled formControlName="questionType">
+                        <option *ngFor="let qt of questionsTypes" [ngValue]="qt._id">
+                            {{qt.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="qDisplayOrder" class="col-3 col-form-label">Display Order</label>
+                <div class="col-9">
+                    <input id="qDisplayOrder" formControlName="displayOrder" name="displayOrder" type="text"
+                        class="form-control">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="timer" class="col-3 col-form-label">Timer</label>
+                <div class="col-9">
+                    <input id="timer" formControlName="timer" name="timer" type="text" class="form-control">
+                </div>
+            </div>
+            <!-- <div class="form-group row">
+                <label for="columnsCount" class="col-3 col-form-label">Columns Count</label>
+                <div class="col-9">
+                    <input id="columnsCount" formControlName="columnsCount" name="columnsCount" type="text"
+                        class="form-control">
+                </div>
+            </div> -->
+            <div class="form-group row">
+                <div class="col-3"></div>
+                <div class="col-9">
+                    <div class="custom-control custom-checkbox custom-control-inline">
+                        <input formControlName="isActive" name="isActive" id="isActive_0" type="checkbox"
+                            class="custom-control-input" value="true" checked="checked">
+                        <label for="isActive_0" class="custom-control-label">Is Active</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary" (click)="clearForm()">Clear</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-danger" [disabled]="!selectedQuestion"
+                        (click)="deleteQuestion()">Delete</button>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary" [disabled]="!questionForm.valid">Save</button>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-success" [disabled]="!questionForm.valid" data-toggle="modal"
+                    data-target="#exampleModal">
+                    <i class="fa fa-plus"></i> Add Answer
+                </button>
+            </div>
+        </form>
+
+    </div>
+    <!-- col1 -->
+    <!-- col-lg-6 col-sm-12 col-xs-12 -->
+    <div class="col">
+        <div class="row" style="text-align: center;">
+            <h3>Answers</h3>
+            <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                <i class="fa fa-plus"></i> Add Answer
+            </button> -->
+        </div>
+        <div class="col" style="text-align: center;line-height: 0.5;">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Answer Text</th>
+                        <th scope="col">Display Ordert</th>
+                        <th scope="col">Image Url</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let a of answers; index as i"
+                        [ngStyle]="{'background-color': a.isCorrect? 'lightgreen' : (style2 ? 'blue' : null) }">
+                        <th>{{i+1}}</th>
+                        <td>{{a.answerText}}</td>
+                        <td>{{a.displayOrder}}</td>
+                        <td>
+                            <div style="padding:5px;" id="truncateLongTextsRtl">{{a.imgUrl}}</div>
+                        </td>
+                        <td>
+                            <img height="50" [src]="a.imgUrl">
+                        </td>
+                        <!-- <td>{{a.isCorrect}}</td> -->
+                        <td>
+                            <button style="padding: 0,0,0,0;" class="btn btn-danger btn-sm" (click)="deleteAnswer(a)">
+                                <i class="fa fa-close"></i>
+                            </button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<!--Answer Entry Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Answer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-answer-entry (notifyAnswerAdded)="onAnswerAdded($event)"></app-answer-entry>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal search image-->
+<div class="modal fade" id="searchImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #4e73ec">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-answer-entry (notifyAnswerAdded)="onAnswerAdded($event)"></app-answer-entry> -->
+                <app-search-image-model (notifySelectImage)="onSelectImage($event)"></app-search-image-model>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>
+
+<!-- add chapter modal -->
+<div class="modal fade" id="addChapterModal" tabindex="-1" role="dialog" aria-labelledby="addChapterModalLabel"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addChapterModalLabel" *ngIf="!selectedChapter">Add Chapter</h5>
+                <h5 class="modal-title" id="addChapterModalLabel" *ngIf="selectedChapter">Edit Chapter</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-book (notifyBookAdded)="onBookAdded($event)" [selectedBook]="selectedBookForEdit"></app-book> -->
+                <app-chapter (notifyChapterAdded)="onChapterAdded($event)"
+                    (notifyChapterDeleted)="onChapterDeleted($event)" [selectedChapterForEdit]="selectedChapter">
+                </app-chapter>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>
+
+<!-- add quiz modal -->
+<div class="modal fade" id="addQuizModal" tabindex="-1" role="dialog" aria-labelledby="addQuizModalLabel"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addQuizModalLabel" *ngIf="!selectedQuiz">Add Quiz</h5>
+                <h5 class="modal-title" id="addQuizModalLabel" *ngIf="selectedQuiz">Edit Quiz</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-book (notifyBookAdded)="onBookAdded($event)" [selectedBook]="selectedBookForEdit"></app-book> -->
+                <app-quiz (notifyQuizAdded)="onQuizAdded($event)" (notifyQuizDeleted)="onQuizDeleted($event)"
+                    [selectedChapterId]="selectedChapterId" [selectedQuizForEdit]="selectedQuiz"></app-quiz>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>

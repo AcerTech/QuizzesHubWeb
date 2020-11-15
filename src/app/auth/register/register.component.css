@@ -1,0 +1,22 @@
+
+.card-title { 
+    border:0 solid #fff; 
+    border-bottom-width:1px;
+    padding-bottom:10px;
+    text-align: center;
+   }
+   
+   .form-control {
+       border-radius: 10px;
+   }
+   
+   #register-btn {
+    background-color: #181818 !important;
+    border-color: #181818 !important;
+    color: #f96816
+  }
+
+  .col-centered{
+    float: none;
+    margin: 0 auto;
+}

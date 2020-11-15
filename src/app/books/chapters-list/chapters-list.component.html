@@ -1,0 +1,56 @@
+<div class="card w-100 shadow p-3 mb-5 bg-white rounded">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Chapter</th>
+                <th scope="col">Quiz</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let c of chapters">
+                <th scope="row">1</th>
+                <td>{{c.name}}</td>
+                <td>
+                    <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#addQuizModal"
+                        (click)="onQuizClicked(c)">Add Quiz</button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+<!-- <div class="card w-100 shadow p-3 mb-5 bg-white rounded">
+    <app-accordion *ngFor="let c of chapters">
+        <app-accordion-item title="{{c.name}}"><button type="button" class="btn btn-outline-info" data-toggle="modal"
+                data-target="#addQuizModal">Add Quiz</button></app-accordion-item>
+    </app-accordion>
+</div> -->
+
+
+<div class="modal fade" id="addQuizModal" tabindex="-1" role="dialog" aria-labelledby="addQuizModalLabel"
+    aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addQuizModalLabel">Add Quiz</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-book (notifyBookAdded)="onBookAdded($event)" [selectedBook]="selectedBookForEdit"></app-book> -->
+                <app-quiz (notifyQuizAdded)="onQuizAdded($event)" [selectedChapter]="selectedChapter"></app-quiz>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>

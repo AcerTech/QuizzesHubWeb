@@ -1,0 +1,107 @@
+<ngx-spinner color="#f97924"></ngx-spinner>
+<br>
+<div *ngIf="errorMsg" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error!</strong> {{errorMsg}}.
+</div>
+
+<div *ngIf="successMsg" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> {{successMsg}}.
+</div>
+
+<div>
+    <div><a href="" [routerLink]="['/my-books']"> <i class="fas fa-arrow-left"></i>My Books</a></div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+            <div class="container">
+
+                <div class="card shadow p-3 mb-5 bg-white rounded"
+                    [ngClass]="{'border-danger': !selectedBook.isActive,'border-success':selectedBook.isActive}">
+                    <img *ngIf="selectedBook.imgUrl" [src]="selectedBook.imgUrl" class="card-img-top"
+                        alt="selectedBook.title">
+
+                    <div *ngIf="!selectedBook.imgUrl" class="imgTxtCenter">
+                        <img class="card-img-top" style="background-color:lightskyblue;">
+                        <div class="centered" style="color:darkblue">{{selectedBook.title}}</div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{selectedBook.title}}</h5>
+                        <span *ngIf="!selectedBook.isActive" style="color: red;" small> (not active)</span>
+                        <p class="card-text">{{selectedBook.description}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-8">
+            <button type="button" class="btn btn-info" [routerLink]="['/question-entry']">Add Question</button>
+            <br><br>
+            <h2>Book content</h2>
+            <div class="card shadow p-3 mb-5 bg-white rounded table-responsive">
+                <div *ngFor="let chapter of chaptersGroupedList | orderBy:  'displayOrder':'asc'">
+                    <div class="bg-dark text-white"> {{chapter.chapter}}
+                        <!-- <span *ngIf="!chapter.isActive"  class="text-warning"> (Chapter is not Active)</span> -->
+                    </div>
+
+                    <div *ngFor="let quiz of chapter.quizzes | orderBy:  'displayOrder':'asc'; index as x">
+                        <div class="bg-secondary text-white"> Quiz : <span style="font-weight: bold;"> {{quiz.quiz}}
+                                <!-- <span *ngIf="!quiz.isActive" class="text-warning"> (quiz is not Active)</span> -->
+                            </span>
+                            total
+                            of
+                            questions : <span *ngIf="quiz.questions" style="font-weight: bold;">
+                                {{quiz.questions.length}} </span>
+                        </div>
+                        <table class="table table-sm table-hover table-responsive">
+                            <thead>
+                                <tr class="table-info">
+                                    <th scope="col">_#_ </th>
+                                    <th scope="col">Q. Type</th>
+                                    <th scope="col">Q. Text</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Display Order</th>
+                                    <th scope="col">Timer</th>
+                                    <!-- <th scope="col">Columns Count</th> -->
+                                    <th scope="col">Answers</th>
+                                    <th scope="col">Question status</th>
+                                    <th scope="col">Quiz status</th>
+                                    <th scope="col">Chapter status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let question of quiz.questions | orderBy:  'displayOrder':'asc' ; index as i"
+                                    [ngStyle]="{'background-color': !question.isActive || !question.quiz.isActive || !question.chapter.isActive ? 'lightpink' :'null'  }"
+                                    (click)="questionClicked(question)">
+                                    <td>{{i+1}}</td>
+                                    <td>{{question.questionType.name}}</td>
+                                    <td class="truncateLongTexts">{{question.questionText}}</td>
+                                    <td>
+                                        <img height="50" [src]="question.imgUrl">
+                                    </td>
+                                    <td>{{question.displayOrder}}</td>
+                                    <td>{{question.timer}}</td>
+                                    <!-- <td>{{question.columnsCount}}</td> -->
+                                    <td *ngIf="question.answers">{{question.answers.length}}</td>
+                                    <td
+                                        [ngClass]="{'text-danger': !question.isActive,'text-success': question.isActive}">
+                                        {{question.isActive}}</td>
+
+                                    <td
+                                        [ngClass]="{'text-danger': !question.quiz.isActive,'text-success': question.quiz.isActive}">
+                                        {{question.quiz.isActive}}</td>
+                                    <td
+                                        [ngClass]="{'text-danger': !question.chapter.isActive,'text-success': question.chapter.isActive}">
+                                        {{question.chapter.isActive}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

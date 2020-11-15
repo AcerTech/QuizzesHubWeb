@@ -1,0 +1,76 @@
+<form [formGroup]="answerForm" (ngSubmit)="saveAnswer()">
+    <div class="form-group">
+        <label for="answerText">Answer Text</label>
+        <input id="answerText" formControlName="answerText" name="answerText" type="text" class="form-control">
+    </div>
+    <div class="form-group">
+        <img style="width:50px;height:50px;" *ngIf="selectedImgUrl" [src]="selectedImgUrl">
+    </div>
+    <div class="form-group">
+        <label for="imgUrl">Image Url</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fa fa-image"></i>
+                </div>
+            </div>
+            <input id="imgUrl" formControlName="imgUrl" name="imgUrl" type="text" class="form-control">
+            <div class="input-group-append">
+                <button class="btn btn-outline-info" type="button" data-toggle="modal"
+                    data-target="#answerSearchImageModal">
+                    <i class="far fa-images"></i>
+                    Select Image</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+
+        <div>
+            <div class="custom-control custom-checkbox custom-control-inline">
+                <input formControlName="isCorrect" name="isCorrect" id="isCorrect" type="checkbox"
+                    class="custom-control-input" value="false" checked="checked">
+                <label for="isCorrect" class="custom-control-label">Is Correct?</label>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="aDisplayOrder">Display Order</label>
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <div class="input-group-text">
+                    <i class="fa fa-list-ol"></i>
+                </div>
+            </div>
+            <input id="aDisplayOrder" formControlName="displayOrder" name="displayOrder" type="text"
+                class="form-control">
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</form>
+
+<!--Select Image Modal -->
+<div class="modal fade" id="answerSearchImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #4e73ec">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select Image</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body">
+                <!-- <app-answer-entry (notifyAnswerAdded)="onAnswerAdded($event)"></app-answer-entry> -->
+                <app-search-image-model (notifySelectImage)="onSelectImage($event)"></app-search-image-model>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>

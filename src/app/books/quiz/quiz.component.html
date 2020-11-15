@@ -1,0 +1,48 @@
+<div class="row">
+
+    <div class="col-md">
+        <form class="needs-validation" novalidate (ngSubmit)="saveQuiz()" [formGroup]="quizForm">
+
+            <div class="mb-3">
+                <label for="name">Quiz Name</label>
+                <input type="text" class="form-control" id="name" formControlName="name" placeholder="Quiz Name"
+                    required>
+                <div class="invalid-feedback">
+                    Please enter quiz name.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="address">Description</label>
+                <input type="text" class="form-control" id="description" formControlName="description"
+                    placeholder="Description" required>
+                <div class="invalid-feedback">
+                    Please enter your description.
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="displayOrder">display Order</label>
+                    <input type="text" class="form-control" id="displayOrder" formControlName="displayOrder"
+                        placeholder="Display Order" required>
+                    <div class="invalid-feedback">
+                        Display Order is required.
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="isActive" formControlName="isActive">
+                <label class="custom-control-label" for="isActive">Is Active</label>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" [disabled]="!quizForm.valid" type="submit">Save</button>
+            <br>
+            <button class="btn btn-danger btn-sm " type="button" *ngIf="selectedQuizForEdit"
+                (click)="deleteQuiz()">Delete</button>
+        </form>
+    </div>
+</div>

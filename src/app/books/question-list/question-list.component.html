@@ -1,0 +1,56 @@
+<form class="form-group row" style="padding: 5px;">
+    <div class="col-8">
+        <label for="chapter" class="col col-form-label">Select a Chapter</label>
+        <select class="form-control" [(ngModel)]="selectedChapterId" id="chapter" name="selectedChapterId"
+            (change)="onChapterChange()">
+            <option *ngFor="let q of chapters" [ngValue]="q._id">
+                {{q.name}}
+            </option>
+        </select>
+    </div>
+</form>
+<form>
+
+    <!-- <div *ngIf="chapterInfo">Avilable Questions for 
+           
+    <span style="font-weight: bolder;">{{chapterInfo.name}}</span>
+    </div> -->
+    <div *ngIf="!selectedChapterId" style="color: red;">YOU NEED TO SELECT A CHAPTER</div>
+    <button class="col" style="background-color: lightgreen;" (click)="refresh()">
+        <i class="fa fa-refresh"></i>
+    </button>
+
+    <div *ngFor="let q of quizesGroupedList; index as i">
+        <h4 class="table-active">{{i+1}}-{{q.quiz}} / {{q.questions.length}}</h4>
+        <table class="table table-sm table-hover">
+            <thead>
+                <tr class="table-info">
+                    <th scope="col">#</th>
+                    <th scope="col">Q. Type</th>
+                    <th scope="col">Q. Text</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Display Order</th>
+                    <th scope="col">Timer</th>
+                    <th scope="col">Columns Count</th>
+                    <th scope="col">Answers</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let question of q.questions; index as x"
+                    [ngStyle]="{'background-color': question.isActive ? 'null' : 'lightpink' }"
+                    (click)="questionClicked(question)">
+                    <td>{{i+1}}-{{x+1}}</td>
+                    <td>{{question.questionType.name}}</td>
+                    <td id="truncateLongTexts">{{question.questionText}}</td>
+                    <td>
+                        <img height="50" [src]="question.imgUrl">
+                    </td>
+                    <td>{{question.displayOrder}}</td>
+                    <td>{{question.timer}}</td>
+                    <td>{{question.columnsCount}}</td>
+                    <td>{{question.answers.length}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>

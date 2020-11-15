@@ -1,0 +1,40 @@
+<br>
+<div class="input-group mb-3">
+  <input type="text" class="form-control" [(ngModel)]="tags" name="tags"
+    placeholder="Enter some tags to save with the images" aria-label="Recipient's username"
+    aria-describedby="button-addon2">
+  <div class="input-group-append">
+    <button class="btn btn-primary" type="button" (click)="saveImageInfo()" id="button-addon2">Save images info</button>
+  </div>
+</div>
+
+<div class="dropzone" dropzone (hovered)="toggleHover($event)" (dropped)="onDrop($event)" [class.hovering]="isHovering">
+
+  <h3>AngularFire Drop Zone</h3>
+  <p>Drag and Drop a File</p>
+  <div class="file">
+    <label class="file-label">
+
+      <input class="file-input" type="file" (change)="onDrop($event.target.files)">
+
+      <span class="file-cta">
+        <!-- <span class="file-icon">
+              <i class="fa fa-upload"></i>
+            </span> -->
+        <!-- <span class="file-label">
+              or choose a file…
+            </span> -->
+      </span>
+    </label>
+  </div>
+</div>
+
+<h3>Uploads</h3>
+<div class="row">
+  <div class="col-4" *ngFor="let file of files">
+    <img height="200" [src]="url">
+    <div id="truncateLongTexts">Name: {{file.name}} size:{{file.name}}</div>
+    <!-- <upload-task [file]="file" (notifyDeleteImage)="deleteImage(file,$event)" (notifyImageAdded)="onImageAdded($event)"> 
+    </upload-task> -->
+  </div>
+</div>

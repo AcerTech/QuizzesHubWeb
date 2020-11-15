@@ -1,0 +1,60 @@
+<div class="center col">
+    <p>upload files!</p>
+    <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)"
+        (onFileLeave)="fileLeave($event)">
+        <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+            Optional custom content that replaces the the entire default content.
+            <button type="button" class="btn btn-sm btn-primary" (click)="openFileSelector()">Browse Files</button>
+        </ng-template>
+    </ngx-file-drop>
+    <br>
+    <div class="row">
+
+        <div class="col"></div>
+
+        <div class="col-6">
+            <div class="input-group mb-3">
+                <div>Enter Image tags </div>
+                <input type="text" class="form-control" [(ngModel)]="tags" name="tags"
+                    placeholder="Enter some tags to save with the images" aria-label="Recipient's username"
+                    aria-describedby="button-addon2">
+
+                <div class="input-group-append">
+                    <button class="btn btn-success" [disabled]="!tags" (click)="saveFilesInfo()"
+                        [ngClass]="{'btn-secondary': !tags}">Upload
+                        images &
+                        Save</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col"></div>
+
+    </div>
+
+    <div class="upload-table col">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody class="upload-name-style">
+                <tr *ngFor="let item of dropedfiles; let i=index">
+                    <td><strong>{{ item.relativePath }}</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<br>
+<h3>Uploads</h3>
+<div class="row">
+    <div class="col-4" *ngFor="let file of files">
+        <img height="200" [src]="url">
+        <div id="truncateLongTexts">{{file.name}}</div>
+        <app-file-uploader [file]="file" (notifyDeleteImage)="onImageDeleted(file,$event)" (notifyImageAdded)="onImageAdded($event)">
+        </app-file-uploader>
+    </div>
+</div>

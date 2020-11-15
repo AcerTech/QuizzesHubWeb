@@ -1,0 +1,37 @@
+.card-title {
+  border: 0 solid #fff;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.form-control {
+  border-radius: 10px;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:visited {
+  background-color: #f96816 !important;
+  border-color: #f96816 !important;
+}
+
+#register-btn {
+  background-color: #181818 !important;
+  border-color: #181818 !important;
+}
+
+/* drow line with text in the center */
+/* -------------- some text here ------------------ */
+span {
+  display: flex;
+  flex-direction: row;
+}
+span:before,
+span:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid rgba(19, 17, 17, 0.452);
+  margin: auto;
+}

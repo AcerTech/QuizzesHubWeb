@@ -1,0 +1,113 @@
+<ngx-spinner color="#f97924"></ngx-spinner>
+<br>
+<div class="card col-centered col-lg-4 col-sm-6">
+    <div class="card-body">
+
+        <div class="container">
+            <div class="d-flex justify-content-center h-100">
+                <div class="image_outer_container">
+                    <div class="green_icon"></div>
+                    <div class="image_inner_container">
+                        <img *ngIf="userForm.get('imgUrl').value" [src]="userForm.get('imgUrl').value">
+                        <img *ngIf="!userForm.get('imgUrl').value" src="./../../../assets/img/user.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="card-title">User Info.</h4>
+        <hr class="bar" />
+        <form class="forms-sample" [formGroup]="userForm" (ngSubmit)="saveInfo()">
+            <div class="form-group">
+                <label for="name">Your name</label>
+                <input type="name" class="form-control" formControlName="name" id="name" placeholder="Your name"
+                    [ngClass]="{'is-invalid': userForm.get('name').errors &&
+                                             ((userForm.get('name').touched ||
+                                              userForm.get('name').dirty) &&
+                                              !userForm.get('name').valid) }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="userForm.get('name').errors?.required">
+                        Please enter your name.
+                    </span>
+                </span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email address"
+                    [ngClass]="{'is-invalid': userForm.get('email').errors &&
+                                             ((userForm.get('email').touched ||
+                                              userForm.get('email').dirty) &&
+                                              !userForm.get('email').valid) }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="userForm.get('email').errors?.required">
+                        Please enter your email.
+                    </span>
+                </span>
+            </div>
+
+            <div class="form-group  mb-4">
+                <label for="imgUrl" class="col-4 col-form-label">Image Url</label>
+                <input type="text" formControlName="imgUrl" name="imgUrl" class="form-control"
+                    placeholder="Click select image button" aria-label="Click select image button"
+                    aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-info" type="button" data-toggle="modal"
+                        data-target="#searchImageModal">
+                        <i class="far fa-images"></i>
+                        Select Image</button>
+                </div>
+            </div>
+
+            <button type="submit" id="register-btn" class="btn btn-primary btn-lg btn-block"
+                [disabled]="userForm.invalid">
+                Save
+            </button>
+            <!--
+        <button class="btn btn-light" [routerLink]="['/home']">Cancel</button>
+      -->
+        </form>
+    </div>
+</div>
+
+
+<!-- Modal search image-->
+<div class="modal fade" id="searchImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #4e73ec">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Select Image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <app-answer-entry (notifyAnswerAdded)="onAnswerAdded($event)"></app-answer-entry> -->
+                <app-search-image-model (notifySelectImage)="onSelectImage($event)"></app-search-image-model>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>
+
+<!-- data-toggle="modal" data-target="#changePasswordModal" -->
+<button class="btn btn-secondary" type="button" (click)="changePasswordClicked()">Change password</button>
+
+<!-- Modal search image-->
+<!-- <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-change-password></app-change-password>
+            </div>
+        </div>
+    </div>
+</div> -->

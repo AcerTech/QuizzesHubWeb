@@ -1,0 +1,86 @@
+<div class="row">
+    <!-- LEFT SIDE  -->
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Grade
+            </div>
+
+            <div class="card-body">
+                <form novalidate (ngSubmit)="saveGrade()" [formGroup]="gradeForm">
+
+                    <div class="form-group row mb-2">
+                        <label class="col-md-2 col-form-label" for="name">Grade Name</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="name" type="text" placeholder="Name (required)"
+                                formControlName="name" />
+                            <span class="invalid-feedback">
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-2">
+                        <label class="col-md-2 col-form-label" for="displayOrder">Display order</label>
+                        <div class="col-md-8">
+                            <input class="form-control" id="displayOrder" type="number" placeholder="Display order"
+                                formControlName="displayOrder" />
+                            <span class="invalid-feedback">
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-2">
+                        <label class="col-md-2 col-form-label" for="descriptionId">Description</label>
+
+                        <div class="col-md-8">
+                            <textarea class="form-control" id="descriptionId" placeholder="Description" rows=3
+                                formControlName="description"></textarea>
+                            <span class="invalid-feedback">
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="form-group row mb-2">
+                        <div class="col-3"></div>
+                        <div class="col-9">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input formControlName="isActive" name="isActive" id="isActive_0" type="checkbox"
+                                    class="custom-control-input" value="true" checked="checked">
+                                <label for="isActive_0" class="custom-control-label">Is Active</label>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row mb-2">
+                        <div class="offset-md-2 col-md-4">
+                            <button class="btn btn-primary mr-3" style="width:80px;" type="submit"
+                                [title]="gradeForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                                [disabled]="!gradeForm.valid">
+                                Save
+                            </button>
+
+                            <button class="btn btn-outline-warning" style="width:80px" type="button"
+                                title="Delete this product" (click)="deleteGrade()">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="col">
+        <app-grades-list></app-grades-list>
+    </div>
+
+</div>

@@ -1,0 +1,41 @@
+<br>
+<div  class="row input-group mb-3">
+    <input type="text" class="form-control primary" [(ngModel)]="tags"  (keyup)="searchImages()"
+        placeholder="Search for image by name or tags">
+</div>
+
+<!-- <a class="nav-link" [routerLink]="['/uploader']">Upload images</a> -->
+<!-- <div class="col-4">
+    <button type="button" class="btn btn-primary btn-sm">Upload images</button>
+</div> -->
+
+<div class="container">
+    <div class="row">
+        <div *ngFor="let img of images" class="col-lg-4 d-flex align-items-stretch">
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-header">
+                    <div id="truncateLongTexts">{{img.name}}</div>
+                </div>
+                <img [src]="img.imgUrl" class="card-img-top" alt="...">
+
+                <div class="card-body">
+                    <p class="card-text">
+                        {{img.tags}}
+                    </p>
+                </div>
+                <input type="text" id="url" *ngIf="false" value="img.imgUrl">
+                <div class="card-footer text-muted">
+                    <!-- <a class="btn btn-primary" value="img.imgUrl" (click)="copyToClipboard(img.imgUrl)">Copy link</a> -->
+
+                    <button class="btn btn-sm btn-info" (click)="selectImage(img.imgUrl)">Select</button>
+
+                    <!-- <button class="btn btn-sm text-danger bottom-right" style="text-align:right;"
+                        (click)="deleteImage(img.imgUrl)"><i class="fa fa-trash"></i></button> -->
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<!-- <ngx-spinner color="#f97924"></ngx-spinner> -->
+
+<div *ngIf="alert" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success!</strong> Email was sent, please check your email to confirm.
+</div>
+
+<div class="card col-centered col-lg-4 col-sm-6">
+    <div class="card-body">
+        <h4 class="card-title">Register</h4>
+        <hr class="bar" />
+        <form class="forms-sample" [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="form-group">
+                <label for="name">Your name</label>
+                <input type="name" class="form-control" formControlName="name" id="name" placeholder="Your name"
+                    [ngClass]="{'is-invalid': registerForm.get('name').errors &&
+                                             ((registerForm.get('name').touched ||
+                                              registerForm.get('name').dirty) &&
+                                              !registerForm.get('name').valid) }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="registerForm.get('name').errors?.required">
+                        Please enter your name.
+                    </span>
+                </span>
+            </div>
+
+            <div class="form-group" >
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email address"
+                    [ngClass]="{'is-invalid': registerForm.get('email').errors &&
+                                             ((registerForm.get('email').touched ||
+                                              registerForm.get('email').dirty) &&
+                                              !registerForm.get('email').valid) }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="registerForm.get('email').errors?.required">
+                        Please enter your email.
+                    </span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" formControlName="password" id="password"
+                    placeholder="Password" [ngClass]="{'is-invalid': registerForm.get('password').errors &&
+                                             ((registerForm.get('password').touched ||
+                                              registerForm.get('password').dirty) &&
+                                              !registerForm.get('password').valid) }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="registerForm.get('password').errors?.required">
+                        Please enter your password.
+                    </span>
+                    <span *ngIf="registerForm.get('password').errors?.pattern">
+                        At least one upper case English letter A-Z,<br>
+                        At least one lower case English letter a-z,<br>
+                        At least one digit 0-9,<br>
+                        At least one special character [#?!@$%^&*,<br>
+                        Minimum eight in length 6.<br>
+                    </span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword"
+                    placeholder="Confirm Password" [ngClass]="{'is-invalid': registerForm.get('confirmPassword').errors &&
+                                             ((registerForm.get('confirmPassword').touched ||
+                                              registerForm.get('confirmPassword').dirty) &&
+                                              !registerForm.get('confirmPassword').valid) }" />
+                <span class="invalid-feedback">
+                    <span *ngIf="registerForm.get('confirmPassword').errors?.required">
+                        Please enter your password.
+                    </span>
+                    <span *ngIf="registerForm.hasError('notSame')">
+                        Passwords do not match
+                    </span>
+                </span>
+            </div>
+
+
+
+
+            <button type="submit" id="register-btn" class="btn btn-primary btn-lg btn-block"
+                [disabled]="registerForm.invalid">
+                Submit
+            </button>
+            <!--
+        <button class="btn btn-light" [routerLink]="['/home']">Cancel</button>
+      -->
+        </form>
+    </div>
+</div>
+<h4 style="color:red">{{ errorMsg }}</h4>
+<h4 style="color:blue">{{ msg }}</h4>

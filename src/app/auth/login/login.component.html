@@ -1,0 +1,63 @@
+<h4 *ngIf="errorMsg" style="color:red"><i class="fas fa-exclamation-circle"></i> {{errorMsg}}</h4>
+<!-- <ngx-spinner color="#f97924"></ngx-spinner> -->
+
+<div class="card mx-auto col-lg-4 col-sm-6">
+    <div class="card-body">
+        <h4 class="card-title">Login</h4>
+        <hr class="bar">
+        <form class="forms-sample" [formGroup]="loginForm" (ngSubmit)="login()" [ngClass]="{'has-error': (
+            loginForm.get('email').touched||
+        loginForm.get('email').dirty &&
+        !loginForm.get('email').valid)}">
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email address"
+                    [ngClass]="{'is-invalid': loginForm.get('email').errors ||
+                                             ((loginForm.get('email').touched ||
+                                              loginForm.get('email').dirty) &&
+                                              !loginForm.get('email').valid) }">
+                <span class="invalid-feedback">
+                    <span *ngIf="loginForm.get('email').errors?.required">
+                        Please enter your email address.
+                    </span>
+                    <span *ngIf="loginForm.get('email').errors?.email">
+                        Please enter a valid email address.
+                    </span>
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" formControlName="password" id="password"
+                    placeholder="Password">
+                <span class="invalid-feedback">
+                    <span *ngIf="loginForm.get('password').errors?.required">
+                        Please enter your password.
+                    </span>
+                </span>
+
+            </div>
+            <div class="center-block">
+                <!-- <button type="submit" class="btn btn-success mr-2">Login</button> -->
+                <button type="submit" class="btn btn-primary btn-lg btn-block"
+                    [disabled]="!loginForm.valid">Login</button>
+            </div>
+
+            <div class="text-center">
+                <br>
+                <span> OR </span>
+                <br>
+            </div>
+            <button type="button" id="register-btn" class="btn btn-primary btn-lg btn-block"
+                [routerLink]="['/register']">Create
+                an account</button>
+            <hr class="bar">
+            <div class="center-block">
+                <a class="sign-link" [routerLink]="['/forgotpassword']">
+                    Do you forget your password?
+                </a>
+            </div>
+        </form>
+
+    </div>
+</div>

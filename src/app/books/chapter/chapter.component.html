@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md">
+        <form class="needs-validation" novalidate (ngSubmit)="saveChapter()" [formGroup]="chapterForm">
+
+            <div class="mb-3">
+                <label for="cName">Chapter Name</label>
+                <input type="text" class="form-control" id="cName" formControlName="name" placeholder="Chapter Name" required>
+                <div class="invalid-feedback">
+                    Please enter chapter name.
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="cDescription">Description</label>
+                <input type="text" class="form-control" id="cDescription" formControlName="description" placeholder="Description" required>
+                <div class="invalid-feedback">
+                    Please enter your description.
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <label for="cDisplayOrder">display Order</label>
+                    <input type="text" class="form-control" id="cDisplayOrder" formControlName="displayOrder" placeholder="Display Order" required>
+                    <div class="invalid-feedback">
+                        Display Order is required.
+                    </div>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="cIsActive" formControlName="isActive">
+                <label class="custom-control-label" for="cIsActive">Is Active</label>
+            </div>
+      
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" [disabled]="!chapterForm.valid" type="submit">Save</button>
+            <br>
+            <button class="btn btn-danger btn-sm " type="button" *ngIf="selectedChapterForEdit"  (click)="deleteChapter()">Delete</button>
+        </form>
+    </div>
+</div>
+
+

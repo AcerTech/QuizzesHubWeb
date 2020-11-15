@@ -1,0 +1,106 @@
+<div class="row">
+    <div class="col-md">
+        <form novalidate (ngSubmit)="saveBook()" [formGroup]="bookForm">
+
+            <div class="mb-3">
+                <label for="title">Book title</label>
+                <input class="form-control" id="title" type="text" placeholder="title (required)"
+                    formControlName="title" />
+                <span class="invalid-feedback">
+                    Pleae enter book title.
+                </span>
+            </div>
+
+
+
+            <div class="mb-3">
+                <label for="descriptionId">Description</label>
+                <textarea class="form-control" id="descriptionId" placeholder="Description" rows=3
+                    formControlName="description"></textarea>
+                <span class="invalid-feedback">
+                    Please enter your description.
+                </span>
+
+            </div>
+
+
+            <div class="form-group">
+                <label for="imgUrl">Image Url</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-image"></i>
+                        </div>
+                    </div>
+                    <input id="imgUrl" formControlName="imgUrl" name="imgUrl" type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-info" type="button" data-toggle="modal"
+                            data-target="#booksSearchImageModal">
+                            <i class="far fa-images"></i>
+                            Select Image</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="tags">Tags</label>
+
+                <input class="form-control" id="tags" type="text" placeholder="Tags" formControlName="tags" />
+                <span class="invalid-feedback">
+
+                </span>
+
+            </div>
+
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="isActive" formControlName="isActive">
+                <label class="custom-control-label" for="isActive">Is Active</label>
+            </div>
+            <br><br>
+
+            <div class="mb-3">
+
+                <button class="btn btn-primary mr-3" style="width:80px;" type="submit"
+                    [title]="bookForm.valid ? 'Save your entered data' : 'Disabled until the form data is valid'"
+                    [disabled]="!bookForm.valid">
+                    Save
+                </button>
+
+                <button class="btn btn-danger" style="width:80px" type="button" title="Delete this product"
+                    [disabled]="!bookForm.valid" (click)="deleteBook()">
+                    Delete
+                </button>
+
+            </div>
+        </form>
+
+
+    </div>
+</div>
+
+
+
+
+
+<div class="alert alert-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+
+
+<!--Select Image Modal -->
+<div class="modal fade" id="booksSearchImageModal" tabindex="-1" role="dialog" aria-labelledby="bookModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background-color: #4e73ec">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">Select Image</h5>
+                <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+            </div>
+            <div class="modal-body">
+                <!-- <app-answer-entry (notifyAnswerAdded)="onAnswerAdded($event)"></app-answer-entry> -->
+                <app-search-image-model (notifySelectImage)="onSelectImage($event)"></app-search-image-model>
+            </div>
+            <!-- footer will be in the answer component -->
+        </div>
+    </div>
+</div>
